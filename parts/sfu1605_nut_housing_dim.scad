@@ -1,0 +1,10 @@
+sfu16_nut_housing_D   = 28;
+sfu16_nut_housing_B   = 52;
+sfu16_nut_housing_H   = 40;
+sfu16_nut_housing_h   = 20;
+sfu16_nut_housing_E   = 12;
+sfu16_nut_housing_L   = 40;
+sfu16_nut_housing_C1  = 8;
+sfu16_nut_housing_C2  = 24;
+sfu16_nut_housing_P   = 40;
+sfu16_nut_housing_PCD = 38;
