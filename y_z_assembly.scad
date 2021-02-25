@@ -228,7 +228,7 @@ module y_z_assembly(offset_y, offset_z)
     }
 
     /* Y plate with Z assembly */
-    translate([profile_h,sbr16uu_offset_def-plate_y_w/2-offset_y,450])
+    translate([profile_h,sbr16uu_offset_def-plate_y_w/2-offset_y,y_profile_top_offset + 100])
     rotate([0,90,0])
     plate_y_z_assembly(offset_z);
 
