@@ -31,6 +31,8 @@ spindle_head_dia = 14;
 spindle_head_bevel_h = 8;
 spindle_body_head_dist = 9;
 
+spindle_milling_cutter_offset = 15;
+
 delta = 0.1;
 
 module spindle_head()
@@ -130,6 +132,12 @@ module spindle()
     color(color_metal)
     translate([0,0,-spindle_body_head_dist])
     spindle_head($fn=100);
+    
+    if ($children > 0)
+    {
+        translate([0,0,-spindle_body_er11_nut_dist-spindle_er11_nut_total_h + spindle_milling_cutter_offset])
+            children(0);
+    }
 }
 
 //spindle();
@@ -183,4 +191,8 @@ module spindle_fan()
     }
 }
 
-spindle($fn=100);
+spindle($fn=100)
+{
+    translate([0,0,-30])
+    cylinder(h = 30, d = 3);
+}

@@ -15,6 +15,7 @@ use <parts/spindle_holder.scad>
 include <parts/spindle_holder_dim.scad>
 
 use <parts/spindle.scad>
+use <parts/milling_cutter.scad>
 
 /* Metric screw */
 use <mx_assembly.scad>
@@ -69,7 +70,10 @@ module plate_y_z_assembly(offset)
         {
             translate([0,-20,0])
             rotate([-90,0,0])
-            spindle();
+            spindle()
+            {
+                milling_cutter($fn=100);
+            }
             spindle_holder_mx_assembly();
             spindle_holder_mx_assembly();
             spindle_holder_mx_assembly();
