@@ -44,6 +44,14 @@ module sfu1605_nut_housing()
         rotate([90,0,0])
         holes_holder();
     }
+    if ($children > 0)
+    {
+        for (i = [0:$children-1])
+        {
+            translate([0,0,sfu16_nut_housing_h])
+                children(i);
+        }
+    }
     bom_item("sfu1605_nut_housing");
 }
 
@@ -72,7 +80,7 @@ module holes_holder()
         cylinder(hole_l,hole_dia/2,hole_dia/2);
         translate([sfu16_nut_housing_B - (sfu16_nut_housing_B-sfu16_nut_housing_P)/2,0,0])
         cylinder(hole_l,hole_dia/2,hole_dia/2);
-        translate([0,sfu16_nut_housing_C2,-delta])
+        translate([0,sfu16_nut_housing_C2,0])
         {
             translate([(sfu16_nut_housing_B-sfu16_nut_housing_P)/2,0,0])
             cylinder(hole_l,hole_dia/2,hole_dia/2);
@@ -81,3 +89,32 @@ module holes_holder()
         }
     }
 }
+
+module sfu1605_nut_plate_holes(dia,l)
+{
+    translate([sfu16_nut_housing_C1,sfu16_nut_housing_H/2,-delta])
+    cylinder(d=dia,h = l+2*delta);
+    translate([sfu16_nut_housing_C1,-sfu16_nut_housing_H/2,-delta])
+    cylinder(d=dia,h = l+2*delta);
+    translate([sfu16_nut_housing_C1+sfu16_nut_housing_C2,sfu16_nut_housing_H/2,-delta])
+    cylinder(d=dia,h = l+2*delta);
+    translate([sfu16_nut_housing_C1+sfu16_nut_housing_C2,-sfu16_nut_housing_H/2,-delta])
+    cylinder(d=dia,h = l+2*delta);
+}
+
+module sfu1605_nut_spacer(h)
+{
+    color(color_plastic_black)
+    difference()
+    {
+    translate([0,-sfu16_nut_housing_B/2,0])
+    cube([sfu16_nut_housing_H,sfu16_nut_housing_B,h]);
+    sfu1605_nut_plate_holes(6.5,10,$fn=100);
+    }
+    bom_item(str("sfu1605_nut_spacer_", h));
+}
+
+//sfu1605_nut_housing($fn=100)
+//sfu1605_nut_spacer(10);
+
+sfu1605_nut_spacer(10);

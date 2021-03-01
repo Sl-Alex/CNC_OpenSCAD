@@ -33,12 +33,19 @@ include <parts/mx_washer_dim.scad>
 /* Nut 8 B */
 use     <parts/nut8b.scad>
 
+include <parts/bf12_dim.scad>
+include <parts/sfu1605_nut_housing_dim.scad>
+include <parts/sfu1605_nut_dim.scad>
+include <parts/sfu1605_dim.scad>
+
 /* Global CNC dimensions */
 include <CNC_dim.scad>
 
 /* Internal variables */
 profile_long_len   = sfu1605_assembly_get_screw_offset_fixed_x3(x_ballscrew_len)+profile_h/2;
 profile_short_len = y_assembly_y_distance-profile_h*6;
+
+sbr16uu_plate_dist = 10;
 
 /* Motor with spider coupling and holder */
 module x_motor_complete()
@@ -99,15 +106,27 @@ module x_sbr16uu_assembly()
     {
         translate([0,-profile_short_len/2-profile_h*2,0])
         {
-            sbr16uu();
+            sbr16uu()
+            {
+                sbr16uu_spacer(sbr16uu_plate_dist);
+            }
             translate([sbr16uu_L + x_sbr16uu_distance,0,0])
-                sbr16uu();
+            sbr16uu()
+            {
+                sbr16uu_spacer(sbr16uu_plate_dist);
+            }
         }
         translate([0, profile_short_len/2+profile_h*2,0])
         {
-            sbr16uu();
+            sbr16uu()
+            {
+                sbr16uu_spacer(sbr16uu_plate_dist);
+            }
             translate([sbr16uu_L + x_sbr16uu_distance,0,0])
-                sbr16uu();
+            sbr16uu()
+            {
+                sbr16uu_spacer(sbr16uu_plate_dist);
+            }
         }
     }
 }
@@ -120,6 +139,11 @@ module x_assembly(offset)
     
     /* Motor with spider coupling and holder */
     x_motor_complete();
+
+    translate([sfu1605_assembly_get_screw_offset_fixed_x2()-profile_h*3/2+offset + sfu1605_fixed_end_len + sfu1605_fixed_end_bearings_len+sfu1605_nut_big_len,0,profile_h+bf12_shaft_h+sfu16_nut_housing_h])
+    sfu1605_nut_spacer(bk12_h+sbr16uu_h + sbr16uu_plate_dist - (bf12_shaft_h+sfu16_nut_housing_h));
+
+//
 
     /* Ballscrew with supports */
     translate([sfu1605_assembly_get_screw_offset_fixed_x2()-profile_h*3/2,0,profile_h])
@@ -141,14 +165,18 @@ module x_assembly(offset)
     /* Linear rails and linear bearings */
     translate([(profile_long_len-x_sbr16_len)/2,0,profile_h])
     {
+        /* Both X rails */
         translate([0, profile_short_len/2+profile_h*2,0])
         sbr16(x_sbr16_len);
         translate([0,-profile_short_len/2-profile_h*2,0])
         sbr16(x_sbr16_len);
+        /* X bearings and plate */
         translate([offset,0,0])
         {
+            /* SBR16UU */
             x_sbr16uu_assembly();
-            translate([x_sbr16uu_distance/2+sbr16uu_L-profile_long_len/2,0,bk12_h+sbr16uu_h + 10])
+            /* X plate */
+            translate([x_sbr16uu_distance/2+sbr16uu_L-profile_long_len/2,0,bk12_h+sbr16uu_h + sbr16uu_plate_dist])
             plate_x(profile_long_len,profile_short_len+profile_h*6-10)
             {
                 translate([sbr16uu_L/2-x_sbr16uu_distance/2-sbr16uu_L+profile_long_len/2,profile_short_len/2+profile_h*2,0])

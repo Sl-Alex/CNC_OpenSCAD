@@ -1,9 +1,10 @@
+include <colors.scad>
 include <bom.scad>
 include <sbr16uu_dim.scad>
 
 sbr16uu_pad_w = (sbr16uu_W-sbr16uu_B);
 
-delta = 0.01;
+delta = 0.1;
 
 module sbr16uu_base()
 {
@@ -83,11 +84,11 @@ module sbr16uu_plate_holes(dia, plate_th)
     rotate([0,0,90])
     union()
     {
-        translate([ sbr16uu_B/2,  sbr16uu_C/2,-1])
+        translate([ sbr16uu_B/2,  sbr16uu_C/2,0])
         cylinder(plate_th+2*delta, dia/2, dia/2);
-        translate([ sbr16uu_B/2, -sbr16uu_C/2,-1])
+        translate([ sbr16uu_B/2, -sbr16uu_C/2,0])
         cylinder(plate_th+2*delta, dia/2, dia/2);
-        translate([-sbr16uu_B/2,  sbr16uu_C/2,-1])
+        translate([-sbr16uu_B/2,  sbr16uu_C/2,0])
         cylinder(plate_th+2*delta, dia/2, dia/2);
         translate([-sbr16uu_B/2, -sbr16uu_C/2,0])
         cylinder(plate_th+2*delta, dia/2, dia/2);
@@ -109,9 +110,30 @@ module sbr16uu()
         color("#808080")
         sbr16uu_insertion();
     }
+    if ($children > 0)
+    {
+        for (i = [0:$children-1])
+        {
+            translate([0,0,sbr16uu_h])
+                children(i);
+        }
+    }
     bom_item("sbr16uu");
 }
 
-//sbr16uu($fn = 100);
+module sbr16uu_spacer(h)
+{
+    color(color_plastic_black)
+    difference()
+    {
+        translate([-sbr16uu_L/2,-sbr16uu_W/2+sbr16uu_chamfer,0])
+        cube([sbr16uu_L,sbr16uu_W-2*sbr16uu_chamfer,h]);
+        translate([0,0,-delta])
+        sbr16uu_plate_holes(sbr16uu_S+1.5,h+2*delta,$fn=100);
+    }    
+    bom_item(str("sbr16uu_spacer_", h));
+}
 
-sbr16uu_plate_holes(3,12, $fn=30);
+//sbr16uu($fn = 100)
+//sbr16uu_plate_holes(3,12, $fn=30);
+sbr16uu_spacer(10);
