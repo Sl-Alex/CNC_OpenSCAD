@@ -2,6 +2,8 @@ include <colors.scad>
 include <bom.scad>
 include <bf12_dim.scad>
 
+delta = 0.1;
+
 module bearing_6000()
 {
     color(color_metal_dark)
@@ -11,6 +13,17 @@ module bearing_6000()
         cylinder(bf12_bearing_th, bf12_bearing_D/2, bf12_bearing_D/2);
         translate([0,0,-1])
         cylinder(bf12_bearing_th+2, bf12_bearing_d/2, bf12_bearing_d/2);
+    }
+}
+
+module bf12_plate_holes(dia, plate_th)
+{
+    translate([0,0,-plate_th-delta])
+    {
+    translate([ 0,bf12_P/2,0])
+    cylinder(plate_th+2*delta, dia/2, dia/2);
+    translate([ 0,-bf12_P/2,0])
+    cylinder(plate_th+2*delta, dia/2, dia/2);
     }
 }
 
@@ -64,3 +77,6 @@ module bf12()
     }
     bom_item("bf12");
 }
+
+bf12();
+bf12_plate_holes(7,10);

@@ -6,7 +6,7 @@ use     <parts/sfu1605_nut.scad>
 include <parts/sfu1605_nut_dim.scad>
 /* Ball screw nut housing */
 use     <parts/sfu1605_nut_housing.scad>
-include <parts/sfu1605_nut_housing.scad>
+include <parts/sfu1605_nut_housing_dim.scad>
 /* Ball screw fixed end support */
 use <parts/bk12.scad>
 include <parts/bk12_dim.scad>

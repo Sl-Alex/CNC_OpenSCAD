@@ -30,6 +30,11 @@ use     <parts/mx_nut.scad>
 /* Shaft support */
 use <parts/sk16.scad>
 
+use     <parts/bk12.scad>
+use     <parts/bf12.scad>
+include <parts/bf12_dim.scad>
+include <parts/sfu1605_dim.scad>
+
 /* Global CNC dimensions */
 include <CNC_dim.scad>
 
@@ -74,6 +79,12 @@ module plate_y_assembly(offset)
     {
         translate([-motor_z_th,0,bk12_h+plate_y_th])
         motor_z_plate_holes(5.5,plate_y_th);
+        
+        translate([z_ballscrew_offset+-bk12_th/2+sfu1605_fixed_end_len+sfu1605_fixed_end_bearings_len,0,plate_y_th])
+                bk12_plate_holes(6,plate_y_th);
+
+        translate([z_ballscrew_offset+z_ballscrew_len+bf12_bearing_th/2-sfu1605_floating_end_len,0,plate_y_th])
+            bf12_plate_holes(6,plate_y_th);
 
         translate([plate_y_l-z_shaft_len, plate_y_w/2-sk16_W/2,plate_y_th])
         sk16_holes_plate(6,plate_y_th);

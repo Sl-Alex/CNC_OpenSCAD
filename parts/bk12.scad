@@ -2,6 +2,8 @@ include <colors.scad>
 include <bom.scad>
 include <bk12_dim.scad>
 
+delta = 0.1;
+
 module bk12_lock_nut()
 {
     color(color_metal_black)
@@ -63,6 +65,21 @@ module bk12_sealing_motor()
             translate([0,0,-1])
                 cylinder(bk12_sealing_TH+2, bk12_sealing_d2/2, bk12_sealing_d2/2);
         }
+    }
+}
+
+module bk12_plate_holes(dia, plate_th)
+{
+    translate([0,0,-plate_th-delta])
+    {
+    translate([ bk12_C1/2,bk12_P/2,0])
+    cylinder(plate_th+2*delta, dia/2, dia/2);
+    translate([ bk12_C1/2,-bk12_P/2,0])
+    cylinder(plate_th+2*delta, dia/2, dia/2);
+    translate([-bk12_C1/2,bk12_P/2,0])
+    cylinder(plate_th+2*delta, dia/2, dia/2);
+    translate([-bk12_C1/2,-bk12_P/2,0])
+    cylinder(plate_th+2*delta, dia/2, dia/2);
     }
 }
 
@@ -131,3 +148,6 @@ module bk12()
     }
     bom_item("bk12");
 }
+
+bk12();
+bk12_plate_holes(7,10);
