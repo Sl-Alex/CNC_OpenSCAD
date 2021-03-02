@@ -134,4 +134,23 @@ module plate_holders()
     plate_holder();
 }
 
+module motor_z_plate_holes(dia, plate_th)
+{
+    translate([plate_th,0,-bk12_h-motor_r/2-delta])
+    translate([connector_l/2,0,0])
+    rotate([0,0,90])
+    {
+    translate([ plate_holder_distance,plate_holder_distance,0])
+    cylinder(plate_th+2*delta, dia/2, dia/2);
+    translate([ plate_holder_distance,-plate_holder_distance,0])
+    cylinder(plate_th+2*delta, dia/2, dia/2);
+    translate([ -plate_holder_distance,plate_holder_distance,0])
+    cylinder(plate_th+2*delta, dia/2, dia/2);
+    translate([ -plate_holder_distance,-plate_holder_distance,0])
+    cylinder(plate_th+2*delta, dia/2, dia/2);
+    }
+}
+
 motor_z($fn=50);
+
+motor_z_plate_holes(6,10);

@@ -72,6 +72,9 @@ module plate_y_assembly(offset)
     /* Base plate */
     plate_y()
     {
+        translate([-motor_z_th,0,bk12_h+plate_y_th])
+        motor_z_plate_holes(5.5,plate_y_th);
+
         translate([plate_y_l-z_shaft_len, plate_y_w/2-sk16_W/2,plate_y_th])
         sk16_holes_plate(6,plate_y_th);
 
