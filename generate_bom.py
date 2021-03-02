@@ -16,7 +16,8 @@ bom_mark = "BOM_ITEM: ";
 print("Generating BOM...");
 
 scad_log = subprocess.check_output('openscad.exe -o preview.png --autocenter --camera=307.83,5.97,208.80,61.30,0,40.40,2100 --imgsize=799,745 --colorscheme="Starnight" ' + sys.argv[1], stderr=subprocess.STDOUT).decode("utf-8");
-#Use the following to get a transparent background: convert preview.png -transparent "#000000" preview.png
+# Make the preview background transparent
+subprocess.call('convert preview.png -transparent "#000000" preview.png')
 
 pos = 0;
 

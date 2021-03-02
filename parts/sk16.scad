@@ -23,6 +23,17 @@ module sk16_holes()
     cylinder(sk16_T+2*delta, sk16_S/2, sk16_S/2);
 }
 
+module sk16_holes_plate(dia, plate_th)
+{
+    union()
+    {
+        translate([ sk16_B/2,  sk16_C/2, -plate_th-delta])
+        cylinder(h = plate_th+2*delta, d = dia);
+        translate([ sk16_B/2, -sk16_C/2, -plate_th-delta])
+        cylinder(h = plate_th+2*delta, d = dia);
+    }
+}
+
 module sk16()
 {
     rotate([0,0,90])
@@ -51,6 +62,26 @@ module sk16()
     }
         sk16_holes();
     }
+    if ($children > 0)
+    {
+        // Shaft
+        translate([0,0,sk16_h])
+        children(0);
+    }
+    if ($children > 1)
+    {
+        // Screw 1
+        translate([sk16_B/2,sk16_C/2,sk16_T])
+        children(1);
+    }
+    if ($children > 2)
+    {
+        // Screw 2
+        translate([sk16_B/2,-sk16_C/2,sk16_T])
+        children(2);
+    }
 
     bom_item("sk16");
 }
+
+sk16();

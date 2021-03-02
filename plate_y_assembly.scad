@@ -19,6 +19,17 @@ include <parts/scj16uu_dim.scad>
 /* Spider coupling */
 use     <parts/shaft_coupling_spider.scad>
 
+/* Metric screw */
+use <mx_assembly.scad>
+/* MX washer */
+use     <parts/mx_washer.scad>
+include <parts/mx_washer_dim.scad>
+/* MX nut */
+use     <parts/mx_nut.scad>
+
+/* Shaft support */
+use <parts/sk16.scad>
+
 /* Global CNC dimensions */
 include <CNC_dim.scad>
 
@@ -26,7 +37,29 @@ include <CNC_dim.scad>
 module z_sbr16uu_assembly(offset)
 {
     scj16uu_offset_def = scj16uu_L/2+sk16_B;
-    sk16_assembly(z_shaft_len);
+    sk16_assembly(z_shaft_len)
+    {
+        /*mx_assembly(6,75,MX_WASHER_th[6],20+MX_WASHER_th[6])
+        {
+            mx_washer(6);
+            group()
+            {
+                translate([0,0,MX_WASHER_th[6]])
+                mx_washer(6);
+                mx_nut(6);
+            }
+        }
+        mx_assembly(6,75,MX_WASHER_th[6],20+MX_WASHER_th[6])
+        {
+            mx_washer(6);
+            group()
+            {
+                translate([0,0,MX_WASHER_th[6]])
+                mx_washer(6);
+                mx_nut(6);
+            }
+        }*/
+    }
     translate([scj16uu_offset_def+offset,0,sk16_h])
     scj16uu();
     translate([scj16uu_offset_def+z_sbr16sajuu_distance+offset,0,sk16_h])
@@ -37,7 +70,20 @@ module z_sbr16uu_assembly(offset)
 module plate_y_assembly(offset)
 {
     /* Base plate */
-    plate_y();
+    plate_y()
+    {
+        translate([plate_y_l-z_shaft_len, plate_y_w/2-sk16_W/2,plate_y_th])
+        sk16_holes_plate(6,plate_y_th);
+
+        translate([plate_y_l-z_shaft_len, -plate_y_w/2+sk16_W/2,plate_y_th])
+        sk16_holes_plate(6,plate_y_th);
+
+        translate([plate_y_l-sk16_B, plate_y_w/2-sk16_W/2,plate_y_th])
+        sk16_holes_plate(6,plate_y_th);
+
+        translate([plate_y_l-sk16_B, -plate_y_w/2+sk16_W/2,plate_y_th])
+        sk16_holes_plate(6,plate_y_th);
+    }
     /* Z motor holder */
     translate([-motor_z_th,0,bk12_h+plate_y_th])
     motor_z();
