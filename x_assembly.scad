@@ -33,8 +33,10 @@ include <parts/mx_washer_dim.scad>
 /* Nut 8 B */
 use     <parts/nut8b.scad>
 
-include <parts/bf12_dim.scad>
+use     <parts/sfu1605_nut_housing.scad>
 include <parts/sfu1605_nut_housing_dim.scad>
+
+include <parts/bf12_dim.scad>
 include <parts/sfu1605_nut_dim.scad>
 include <parts/sfu1605_dim.scad>
 
@@ -143,8 +145,6 @@ module x_assembly(offset)
     translate([sfu1605_assembly_get_screw_offset_fixed_x2()-profile_h*3/2+offset + sfu1605_fixed_end_len + sfu1605_fixed_end_bearings_len+sfu1605_nut_big_len,0,profile_h+bf12_shaft_h+sfu16_nut_housing_h])
     sfu1605_nut_spacer(bk12_h+sbr16uu_h + sbr16uu_plate_dist - (bf12_shaft_h+sfu16_nut_housing_h));
 
-//
-
     /* Ballscrew with supports */
     translate([sfu1605_assembly_get_screw_offset_fixed_x2()-profile_h*3/2,0,profile_h])
     sfu1605_assembly(x_ballscrew_len,offset)
@@ -162,9 +162,12 @@ module x_assembly(offset)
         }
     }
 
+
     /* Linear rails and linear bearings */
     translate([(profile_long_len-x_sbr16_len)/2,0,profile_h])
     {
+
+
         /* Both X rails */
         translate([0, profile_short_len/2+profile_h*2,0])
         sbr16(x_sbr16_len);
@@ -175,10 +178,14 @@ module x_assembly(offset)
         {
             /* SBR16UU */
             x_sbr16uu_assembly();
+
             /* X plate */
             translate([x_sbr16uu_distance/2+sbr16uu_L-profile_long_len/2,0,bk12_h+sbr16uu_h + sbr16uu_plate_dist])
             plate_x(profile_long_len,profile_short_len+profile_h*6-10)
             {
+                translate([-x_sbr16uu_distance/2-sbr16uu_L+x_sbr16_len/2+sfu1605_assembly_get_screw_offset_fixed_x2()-profile_h*3/2+sfu1605_fixed_end_len + sfu1605_fixed_end_bearings_len+sfu1605_nut_big_len,0,0])
+                sfu1605_nut_plate_holes(6,plate_x_th);
+
                 translate([sbr16uu_L/2-x_sbr16uu_distance/2-sbr16uu_L+profile_long_len/2,profile_short_len/2+profile_h*2,0])
                 sbr16uu_plate_holes(6, plate_x_th+2);
                 translate([sbr16uu_L/2-x_sbr16uu_distance/2-sbr16uu_L+profile_long_len/2,-profile_short_len/2-profile_h*2,0])
