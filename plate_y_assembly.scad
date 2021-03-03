@@ -131,7 +131,20 @@ module plate_y_assembly(offset)
     }
     /* Z motor holder */
     translate([-motor_z_th,0,bk12_h+plate_y_th])
-    motor_z();
+    motor_z()
+    {
+        mx_assembly(MX_WASHER_th[5],plate_y_th+ motor_z_plate_holder_th +MX_WASHER_th[5])
+        {
+            mx_screw_lens_hex(5, 25);
+            mx_washer(5);
+            group()
+            {
+                translate([0,0,MX_WASHER_th[5]])
+                mx_washer(5);
+                mx_nut(5);
+            }
+        }
+    }
     /* Z motor */
     translate([-motor_z_th,0,bk12_h+plate_y_th])
     {

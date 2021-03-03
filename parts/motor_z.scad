@@ -19,7 +19,6 @@ m5_hole_r = 5.5/2;
 m5_lens_head_r = 9.5/2;
 
 plate_holder_distance = 14;
-plate_holder_th = 7;
 
 walls_th = 15;
 
@@ -108,17 +107,33 @@ module motor_z()
             cylinder(motor_z_th + 2*delta + connector_l, motor_r, motor_r, center = false);
         }
     }
+    if ($children > 0)
+    {
+        translate([plate_th,0,-bk12_h+motor_z_plate_holder_th-delta])
+        translate([connector_l/2,0,0])
+        rotate([0,0,90])
+        {
+        translate([ plate_holder_distance,plate_holder_distance,0])
+        children(0);
+        translate([ plate_holder_distance,-plate_holder_distance,0])
+        children(0);
+        translate([ -plate_holder_distance,plate_holder_distance,0])
+        children(0);
+        translate([ -plate_holder_distance,-plate_holder_distance,0])
+        children(0);
+        }
+    }
     bom_item("motor_holder_z");
 }
 
 module plate_holder()
 {
-    translate([bk12_h-plate_holder_th+plate_holder_th,motor_w/2,connector_l/2])
+    translate([bk12_h,motor_w/2,connector_l/2])
     rotate([0,90,180])
     {
-        translate([0,0,bk12_h-plate_holder_th-delta])
-        cylinder(bk12_h-plate_holder_th+delta, m5_hole_r, m5_hole_r, center = false);
-        cylinder(bk12_h-plate_holder_th, m5_lens_head_r, m5_lens_head_r, center = false);
+        translate([0,0,bk12_h-motor_z_plate_holder_th-delta])
+        cylinder(bk12_h-motor_z_plate_holder_th+delta, m5_hole_r, m5_hole_r, center = false);
+        cylinder(bk12_h-motor_z_plate_holder_th, m5_lens_head_r, m5_lens_head_r, center = false);
     }
 }
 
@@ -151,6 +166,9 @@ module motor_z_plate_holes(dia, plate_th)
     }
 }
 
-motor_z($fn=50);
+motor_z($fn=50)
+{
+    cube(1);
+}
 
 motor_z_plate_holes(6,10);
