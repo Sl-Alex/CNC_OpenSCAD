@@ -143,9 +143,39 @@ module plate_y_assembly(offset)
     translate([z_ballscrew_offset,0,plate_y_th])
     sfu1605_assembly(z_ballscrew_len, offset)
     {
-        group(){};
-        group(){};
-        group(){};
+        mx_assembly(MX_WASHER_th[6],plate_y_th+bk12_vert_hole_z +MX_WASHER_th[6])
+        {
+            mx_screw_lens_hex(6, 50);
+            mx_washer(6);
+            group()
+            {
+                translate([0,0,MX_WASHER_th[6]])
+                mx_washer(6);
+                mx_nut(6);
+            }
+        }
+        mx_assembly(MX_WASHER_th[6],plate_y_th+bk12_vert_hole_z +MX_WASHER_th[6])
+        {
+            mx_screw_lens_hex(6, 50);
+            mx_washer(6);
+            group()
+            {
+                translate([0,0,MX_WASHER_th[6]])
+                mx_washer(6);
+                mx_nut(6);
+            }
+        }
+        mx_assembly(MX_WASHER_th[6],plate_y_th+bk12_vert_hole_z +MX_WASHER_th[6])
+        {
+            mx_screw_lens_hex(6, 50);
+            mx_washer(6);
+            group()
+            {
+                translate([0,0,MX_WASHER_th[6]])
+                mx_washer(6);
+                mx_nut(6);
+            }
+        }
         mx_assembly(11.1,0)
         {
             mx_screw_flat_hex(5, plate_z_th + 10);
