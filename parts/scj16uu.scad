@@ -136,8 +136,33 @@ module scj16uu()
     color("#505050")
     translate([0,scj16uu_B/2,-scj16uu_G+scj16uu_h-screw_head_th])
     scj16uu_adj_screw();
+
+    /* Screws */
+    translate([ scj16uu_C/2,  scj16uu_B/2,scj16uu_h])
+    children(0);
+    translate([ scj16uu_C/2, -scj16uu_B/2,scj16uu_h])
+    children(1);
+    translate([-scj16uu_C/2,  scj16uu_B/2,scj16uu_h])
+    children(2);
+    translate([-scj16uu_C/2, -scj16uu_B/2,scj16uu_h])
+    children(3);
+    /* The rest */
+    if ($children > 4)
+    {
+        for (i = [4:$children-1])
+        {
+            translate([0,0,sbr16uu_h])
+                children(i);
+        }
+    }
     bom_item("scj16uu");
 }
 
-//scj16uu($fn = 100);
-scj16uu_plate_holes(6,15,$fn = 100);
+scj16uu($fn = 100)
+{
+    cube(1);
+    cube(1);
+    cube(1);
+    cube(1);
+}
+//scj16uu_plate_holes(6,15,$fn = 100);

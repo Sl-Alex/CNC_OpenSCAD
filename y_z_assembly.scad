@@ -109,9 +109,21 @@ module y_sbr16uu_assembly()
     translate([0,0,profile_h+sbr16_h])
     {
         translate([-sbr16uu_L/2,0,0])
-        sbr16uu();
+        sbr16uu()
+        {
+            group(){};
+            group(){};
+            group(){};
+            group(){};
+        }
         translate([-plate_y_w+sbr16uu_L/2,0,0])
-        sbr16uu();
+        sbr16uu()
+        {
+            group(){};
+            group(){};
+            group(){};
+            group(){};
+        }
     }
 }
 

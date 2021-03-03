@@ -110,9 +110,19 @@ module sbr16uu()
         color("#808080")
         sbr16uu_insertion();
     }
-    if ($children > 0)
+    /* Screws */
+    translate([ sbr16uu_C/2,  sbr16uu_B/2,sbr16uu_h])
+    children(0);
+    translate([ sbr16uu_C/2, -sbr16uu_B/2,sbr16uu_h])
+    children(1);
+    translate([-sbr16uu_C/2,  sbr16uu_B/2,sbr16uu_h])
+    children(2);
+    translate([-sbr16uu_C/2, -sbr16uu_B/2,sbr16uu_h])
+    children(3);
+    /* The rest */
+    if ($children > 4)
     {
-        for (i = [0:$children-1])
+        for (i = [4:$children-1])
         {
             translate([0,0,sbr16uu_h])
                 children(i);
@@ -136,4 +146,11 @@ module sbr16uu_spacer(h)
 
 //sbr16uu($fn = 100)
 //sbr16uu_plate_holes(3,12, $fn=30);
-sbr16uu_spacer(10);
+//sbr16uu_spacer(10);
+sbr16uu()
+{
+    cube(1);
+    cube(1);
+    cube(1);
+    cube(1);
+}

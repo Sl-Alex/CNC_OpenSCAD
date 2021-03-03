@@ -40,6 +40,14 @@ include <parts/bf12_dim.scad>
 include <parts/sfu1605_nut_dim.scad>
 include <parts/sfu1605_dim.scad>
 
+/* Metric screw */
+use <mx_assembly.scad>
+/* MX washer */
+use     <parts/mx_washer.scad>
+include <parts/mx_washer_dim.scad>
+/* MX nut */
+use     <parts/mx_nut.scad>
+
 /* Global CNC dimensions */
 include <CNC_dim.scad>
 
@@ -108,28 +116,37 @@ module x_sbr16uu_assembly()
     {
         translate([0,-profile_short_len/2-profile_h*2,0])
         {
-            sbr16uu()
-            {
-                sbr16uu_spacer(sbr16uu_plate_dist);
-            }
+            x_sbr16uu_single_assembly();
             translate([sbr16uu_L + x_sbr16uu_distance,0,0])
-            sbr16uu()
-            {
-                sbr16uu_spacer(sbr16uu_plate_dist);
-            }
+            x_sbr16uu_single_assembly();
         }
         translate([0, profile_short_len/2+profile_h*2,0])
         {
-            sbr16uu()
-            {
-                sbr16uu_spacer(sbr16uu_plate_dist);
-            }
+            x_sbr16uu_single_assembly();
             translate([sbr16uu_L + x_sbr16uu_distance,0,0])
-            sbr16uu()
-            {
-                sbr16uu_spacer(sbr16uu_plate_dist);
-            }
+            x_sbr16uu_single_assembly();
         }
+    }
+}
+
+module x_sbr16uu_mx_assembly()
+{
+    translate([0,0,sbr16uu_plate_dist+plate_x_th+MX_WASHER_th[5]])
+    mx_assembly(5,30,MX_WASHER_th[5],0)
+    {
+        mx_washer(5);
+    }
+}
+
+module x_sbr16uu_single_assembly()
+{
+    sbr16uu()
+    {
+        x_sbr16uu_mx_assembly();
+        x_sbr16uu_mx_assembly();
+        x_sbr16uu_mx_assembly();
+        x_sbr16uu_mx_assembly();
+        sbr16uu_spacer(sbr16uu_plate_dist);
     }
 }
 

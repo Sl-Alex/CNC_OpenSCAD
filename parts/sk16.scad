@@ -3,7 +3,6 @@ include <bom.scad>
 include <sk16_dim.scad>
 
 
-sk16_T = 8;
 sk16_H = 44;
 sk16_E = 25;
 sk16_C = 38;

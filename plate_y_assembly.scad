@@ -27,8 +27,11 @@ include <parts/mx_washer_dim.scad>
 /* MX nut */
 use     <parts/mx_nut.scad>
 
+include <parts/plate_z_dim.scad>
+
 /* Shaft support */
 use <parts/sk16.scad>
+include <parts/sk16_dim.scad>
 
 use     <parts/bk12.scad>
 use     <parts/bf12.scad>
@@ -44,7 +47,7 @@ module z_sbr16uu_assembly(offset)
     scj16uu_offset_def = scj16uu_L/2+sk16_B;
     sk16_assembly(z_shaft_len)
     {
-        /*mx_assembly(6,75,MX_WASHER_th[6],20+MX_WASHER_th[6])
+        mx_assembly(6,30,MX_WASHER_th[6],plate_y_th+sk16_T +MX_WASHER_th[6])
         {
             mx_washer(6);
             group()
@@ -54,7 +57,7 @@ module z_sbr16uu_assembly(offset)
                 mx_nut(6);
             }
         }
-        mx_assembly(6,75,MX_WASHER_th[6],20+MX_WASHER_th[6])
+        mx_assembly(6,30,MX_WASHER_th[6],plate_y_th+sk16_T+MX_WASHER_th[6])
         {
             mx_washer(6);
             group()
@@ -63,12 +66,32 @@ module z_sbr16uu_assembly(offset)
                 mx_washer(6);
                 mx_nut(6);
             }
-        }*/
+        }
     }
     translate([scj16uu_offset_def+offset,0,sk16_h])
-    scj16uu();
+    z_scj16uu_single_assembly();
     translate([scj16uu_offset_def+z_sbr16sajuu_distance+offset,0,sk16_h])
-    scj16uu();
+    z_scj16uu_single_assembly();
+}
+
+module z_scj16uu_mx_assembly()
+{
+    translate([0,0,plate_z_th+MX_WASHER_th[5]])
+    mx_assembly(5,30,MX_WASHER_th[5],0)
+    {
+        mx_washer(5);
+    }
+}
+
+module z_scj16uu_single_assembly()
+{
+    scj16uu()
+    {
+        z_scj16uu_mx_assembly();
+        z_scj16uu_mx_assembly();
+        z_scj16uu_mx_assembly();
+        z_scj16uu_mx_assembly();
+    }
 }
 
 /* Complete Y plate assembly */
