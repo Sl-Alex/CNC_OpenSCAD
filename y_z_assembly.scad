@@ -44,6 +44,7 @@ use     <parts/y_bk12_bf12_support.scad>
 include <parts/y_bk12_bf12_support_dim.scad>
 /* MX assembly */
 use     <mx_assembly.scad>
+use     <parts/mx_screw_lens_hex.scad>
 /* Nut 8 B */
 use     <parts/nut8b.scad>
 
@@ -227,13 +228,15 @@ module y_z_assembly(offset_y, offset_z)
     sfu1605_assembly(y_ball_screw_len,offset_y)
     {
         mx_dia = 6;
-        mx_assembly(mx_dia, 45, 0,bk12_vert_hole_z+profile_th+y_bk12_bf12_support_th)
+        mx_assembly(0,bk12_vert_hole_z+profile_th+y_bk12_bf12_support_th)
         {
+            mx_screw_lens_hex(mx_dia, 45);
             group(); //< Empty group instead of a washer
             nut8b(mx_dia);
         }
-        mx_assembly(mx_dia, 45, 0,bk12_vert_hole_z+profile_th+y_bk12_bf12_support_th)
+        mx_assembly(0,bk12_vert_hole_z+profile_th+y_bk12_bf12_support_th)
         {
+            mx_screw_lens_hex(mx_dia, 45);
             group(); //< Empty group instead of a washer
             nut8b(mx_dia);
         }

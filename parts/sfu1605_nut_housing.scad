@@ -44,9 +44,18 @@ module sfu1605_nut_housing()
         rotate([90,0,0])
         holes_holder();
     }
-    if ($children > 0)
+    /* Screws */
+    translate([ sfu16_nut_housing_C1,  sfu16_nut_housing_P/2,sfu16_nut_housing_h])
+    children(0);
+    translate([ sfu16_nut_housing_C1, -sfu16_nut_housing_P/2,sfu16_nut_housing_h])
+    children(1);
+    translate([ sfu16_nut_housing_C1 + sfu16_nut_housing_C2,  sfu16_nut_housing_P/2,sfu16_nut_housing_h])
+    children(2);
+    translate([ sfu16_nut_housing_C1 + sfu16_nut_housing_C2, -sfu16_nut_housing_P/2,sfu16_nut_housing_h])
+    children(3);
+    if ($children > 4)
     {
-        for (i = [0:$children-1])
+        for (i = [4:$children-1])
         {
             translate([0,0,sfu16_nut_housing_h])
                 children(i);
@@ -114,7 +123,13 @@ module sfu1605_nut_spacer(h)
     bom_item(str("sfu1605_nut_spacer_", h));
 }
 
-//sfu1605_nut_housing($fn=100)
+sfu1605_nut_housing($fn=100)
+{
+    cube(1);
+    cube(1);
+    cube(1);
+    cube(1);
+}
 //sfu1605_nut_spacer(10);
 
-sfu1605_nut_spacer(10);
+//sfu1605_nut_spacer(10);

@@ -14,11 +14,17 @@ include <parts/sk16_dim.scad>
 use <parts/spindle_holder.scad>
 include <parts/spindle_holder_dim.scad>
 
+use <sfu1605_assembly.scad>
+include <parts/sfu1605_dim.scad>
+use <parts/sfu1605_nut_housing.scad>
+include <parts/sfu1605_nut_dim.scad>
+
 use <parts/spindle.scad>
 use <parts/milling_cutter.scad>
 
 /* Metric screw */
 use <mx_assembly.scad>
+use <parts/mx_screw_lens_hex.scad>
 /* MX washer */
 use     <parts/mx_washer.scad>
 include <parts/mx_washer_dim.scad>
@@ -27,8 +33,9 @@ use     <parts/mx_nut.scad>
 
 module spindle_holder_mx_assembly()
 {
-    mx_assembly(6,75,MX_WASHER_th[6],spindle_holder_hole_z+plate_z_th+MX_WASHER_th[6])
+    mx_assembly(MX_WASHER_th[6],spindle_holder_hole_z+plate_z_th+MX_WASHER_th[6])
     {
+        mx_screw_lens_hex(6, 75);
         mx_washer(6);
         group()
         {
@@ -45,10 +52,12 @@ module plate_y_z_assembly(offset)
     /* Plate Y assembly */
     plate_y_assembly(offset)
     {
-        translate([0,0,0.1])
         /* Plate Z */
         plate_z()
         {
+            translate([-plate_y_l+z_shaft_len+z_ballscrew_offset+ sfu1605_fixed_end_len + sfu1605_fixed_end_bearings_len+sfu1605_nut_big_len,0,0])
+            sfu1605_nut_plate_holes(6,plate_z_th);
+
             translate([scj16uu_L/2+sk16_B,-plate_y_w/2+sk16_W/2,0])
             scj16uu_plate_holes(6, plate_z_th+2);
 
@@ -83,5 +92,6 @@ module plate_y_z_assembly(offset)
 }
 
 //plate_y_z_assembly((0.5-0.5*cos($t*360))*74);
-plate_y_z_assembly(10, $fn=30);
+//plate_y_z_assembly(10, $fn=30);
+plate_y_z_assembly(0, $fn=30);
 

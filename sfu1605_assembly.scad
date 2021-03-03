@@ -15,6 +15,8 @@ use <parts/bf12.scad>
 include <parts/bf12_dim.scad>
 /* MX assembly */
 use     <mx_assembly.scad>
+use     <parts/mx_screw_lens_hex.scad>
+use     <parts/mx_screw_flat_hex.scad>
 /* MX washer */
 use     <parts/mx_washer.scad>
 include <parts/mx_washer_dim.scad>
@@ -94,7 +96,17 @@ module sfu1605_assembly(length, nut_offset)
             {
                 sfu1605_nut();
                 translate([sfu1605_nut_big_len,0,0])
-                sfu1605_nut_housing();
+                sfu1605_nut_housing()
+                {
+                    if ($children > 3)
+                    children(3);
+                    if ($children > 3)
+                    children(3);
+                    if ($children > 3)
+                    children(3);
+                    if ($children > 3)
+                    children(3);
+                }
             }
         }
     }
@@ -103,9 +115,27 @@ module sfu1605_assembly(length, nut_offset)
 sfu1605_assembly(500,100)
 {
     mx_dia = 6;
-    mx_assembly(mx_dia, 40, 0,bk12_vert_hole_z)
+    mx_assembly(0,bk12_vert_hole_z)
     {
+        mx_screw_lens_hex(mx_dia, 40);
         group(); //< Empty group instead of a washer
         nut8b(mx_dia);
     }
+    mx_assembly(0,bk12_vert_hole_z)
+    {
+        mx_screw_lens_hex(mx_dia, 40);
+        group(); //< Empty group instead of a washer
+        nut8b(mx_dia);
+    }
+    mx_assembly(0,bk12_vert_hole_z)
+    {
+        mx_screw_lens_hex(mx_dia, 40);
+        group(); //< Empty group instead of a washer
+        nut8b(mx_dia);
+    }
+    mx_assembly(10,0)
+    {
+        mx_screw_flat_hex(5, 20);
+    }
+
 }

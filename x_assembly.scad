@@ -42,6 +42,7 @@ include <parts/sfu1605_dim.scad>
 
 /* Metric screw */
 use <mx_assembly.scad>
+use <parts/mx_screw_flat_hex.scad>
 /* MX washer */
 use     <parts/mx_washer.scad>
 include <parts/mx_washer_dim.scad>
@@ -131,9 +132,10 @@ module x_sbr16uu_assembly()
 
 module x_sbr16uu_mx_assembly()
 {
-    translate([0,0,sbr16uu_plate_dist+plate_x_th+MX_WASHER_th[5]])
-    mx_assembly(5,30,MX_WASHER_th[5],0)
+    translate([0,0,sbr16uu_plate_dist+plate_x_th])
+    mx_assembly(MX_WASHER_th[5],0)
     {
+        mx_screw_lens_hex(5,30);
         mx_washer(5);
     }
 }
@@ -167,15 +169,23 @@ module x_assembly(offset)
     sfu1605_assembly(x_ballscrew_len,offset)
     {
         mx_dia = 6;
-        mx_assembly(mx_dia, 37, 0,bk12_vert_hole_z+profile_th)
+        mx_assembly(0,bk12_vert_hole_z+profile_th)
         {
+            mx_screw_lens_hex(mx_dia, 35);
             group(); //< Empty group instead of a washer
             nut8b(mx_dia);
         }
-        mx_assembly(mx_dia, 37, 0,bk12_vert_hole_z+profile_th)
+        mx_assembly(0,bk12_vert_hole_z+profile_th)
         {
+            mx_screw_lens_hex(mx_dia, 35);
             group(); //< Empty group instead of a washer
             nut8b(mx_dia);
+        }
+        group(){}
+        
+        mx_assembly(plate_x_th+bk12_h+sbr16uu_h + sbr16uu_plate_dist - (bf12_shaft_h+sfu16_nut_housing_h) +0.1,0)
+        {
+            mx_screw_flat_hex(5, plate_x_th+bk12_h+sbr16uu_h + sbr16uu_plate_dist - (bf12_shaft_h+sfu16_nut_housing_h) + 10);
         }
     }
 

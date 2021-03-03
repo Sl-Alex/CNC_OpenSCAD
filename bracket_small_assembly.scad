@@ -10,6 +10,7 @@ use     <parts/bracket_small.scad>
 include <parts/bracket_small_dim.scad>
 /* MX assembly */
 use     <mx_assembly.scad>
+use     <parts/mx_screw_lens_hex.scad>
 /* Aluminium profile */
 include <parts/profile_30_dim.scad>
 
@@ -20,8 +21,9 @@ module bracket_small_assembly(rotate_1, rotate_2)
     nut_off = profile_th;
     bracket_small();
     translate([profile_h/2,0,bracket_small_th])
-    mx_assembly(dia, len, MX_WASHER_th[dia],nut_off+bracket_small_th)
+    mx_assembly(MX_WASHER_th[dia],nut_off+bracket_small_th)
     {
+        mx_screw_lens_hex(dia, len);
         mx_washer(dia);
         if (rotate_1)
         {
@@ -36,8 +38,9 @@ module bracket_small_assembly(rotate_1, rotate_2)
 
     translate([bracket_small_th,0,profile_h/2])
     rotate([0,90,0])
-    mx_assembly(dia, len, MX_WASHER_th[dia],nut_off+bracket_small_th)
+    mx_assembly(MX_WASHER_th[dia],nut_off+bracket_small_th)
     {
+        mx_screw_lens_hex(dia, len);
         mx_washer(dia);
         if (rotate_2)
         {

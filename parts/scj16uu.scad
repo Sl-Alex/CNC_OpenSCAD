@@ -158,11 +158,12 @@ module scj16uu()
     bom_item("scj16uu");
 }
 
-scj16uu($fn = 100)
+/*scj16uu($fn = 100)
 {
     cube(1);
     cube(1);
     cube(1);
     cube(1);
-}
+}*/
+scj16uu_base();
 //scj16uu_plate_holes(6,15,$fn = 100);
