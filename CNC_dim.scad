@@ -15,3 +15,4 @@ z_sbr16sajuu_distance = 100;
 z_shaft_len = 250;
 z_ballscrew_len = 250;
 z_ballscrew_offset = 23;
+z_ballscrew_nut_offset = 24;

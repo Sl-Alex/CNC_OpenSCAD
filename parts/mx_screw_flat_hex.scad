@@ -84,7 +84,7 @@ module mx_screw_flat_hex(dia, length)
             hexagon_prism(MX_SCREW_FLAT_HEX_t[dia] + 1, MX_SCREW_FLAT_HEX_S[dia]/2);
         }
     }
-    bom_item(str("m", dia, "x", length, "_screw_lens_hex"));
+    bom_item(str("m", dia, "x", length, "_screw_flat_hex"));
 }
 
 mx_screw_flat_hex(6,20);

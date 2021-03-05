@@ -135,7 +135,7 @@ module x_sbr16uu_mx_assembly()
     translate([0,0,sbr16uu_plate_dist+plate_x_th])
     mx_assembly(MX_WASHER_th[5],0)
     {
-        mx_screw_lens_hex(5,30);
+        mx_screw_lens_hex(5,plate_x_th + sbr16uu_plate_dist + 10);
         mx_washer(5);
     }
 }

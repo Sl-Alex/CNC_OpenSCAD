@@ -54,7 +54,7 @@ module z_sk16uu_assembly(offset)
     {
         mx_assembly(MX_WASHER_th[6],plate_y_th+sk16_T +MX_WASHER_th[6])
         {
-            mx_screw_lens_hex(6, 30);
+            mx_screw_lens_hex(6, plate_y_th + sk16_T + 12);
             mx_washer(6);
             group()
             {
@@ -65,7 +65,7 @@ module z_sk16uu_assembly(offset)
         }
         mx_assembly(MX_WASHER_th[6],plate_y_th+sk16_T+MX_WASHER_th[6])
         {
-            mx_screw_lens_hex(6, 30);
+            mx_screw_lens_hex(6, plate_y_th + sk16_T + 12);
             mx_washer(6);
             group()
             {
@@ -86,7 +86,7 @@ module z_scj16uu_mx_assembly()
     translate([0,0,plate_z_th])
     mx_assembly(MX_WASHER_th[5],0)
     {
-        mx_screw_lens_hex(5, 30);
+        mx_screw_lens_hex(5, plate_z_th + 10);
         mx_washer(5);
     }
 }
@@ -135,7 +135,7 @@ module plate_y_assembly(offset)
     {
         mx_assembly(MX_WASHER_th[5],plate_y_th+ motor_z_plate_holder_th +MX_WASHER_th[5])
         {
-            mx_screw_lens_hex(5, 25);
+            mx_screw_lens_hex(5, plate_y_th + motor_z_plate_holder_th + 8);
             mx_washer(5);
             group()
             {
@@ -154,11 +154,11 @@ module plate_y_assembly(offset)
     }
     /* sfu1605 assembly */
     translate([z_ballscrew_offset,0,plate_y_th])
-    sfu1605_assembly(z_ballscrew_len, offset)
+    sfu1605_assembly(z_ballscrew_len, z_ballscrew_nut_offset + offset)
     {
         mx_assembly(MX_WASHER_th[6],plate_y_th+bk12_vert_hole_z +MX_WASHER_th[6])
         {
-            mx_screw_lens_hex(6, 50);
+            mx_screw_lens_hex(6, plate_y_th + 45);
             mx_washer(6);
             group()
             {
@@ -169,7 +169,7 @@ module plate_y_assembly(offset)
         }
         mx_assembly(MX_WASHER_th[6],plate_y_th+bk12_vert_hole_z +MX_WASHER_th[6])
         {
-            mx_screw_lens_hex(6, 50);
+            mx_screw_lens_hex(6, plate_y_th + 45);
             mx_washer(6);
             group()
             {
@@ -180,7 +180,7 @@ module plate_y_assembly(offset)
         }
         mx_assembly(MX_WASHER_th[6],plate_y_th+bk12_vert_hole_z +MX_WASHER_th[6])
         {
-            mx_screw_lens_hex(6, 50);
+            mx_screw_lens_hex(6, plate_y_th + 45);
             mx_washer(6);
             group()
             {
@@ -189,13 +189,13 @@ module plate_y_assembly(offset)
                 mx_nut(6);
             }
         }
-        mx_assembly(11.1,0)
+        mx_assembly(sk16_h+scj16uu_h-bf12_shaft_h-sfu16_nut_housing_h+plate_z_th+0.1,0)
         {
             mx_screw_flat_hex(5, plate_z_th + 10);
         }
     }
 
-    translate([z_ballscrew_offset+sfu1605_fixed_end_len + sfu1605_fixed_end_bearings_len+sfu1605_nut_big_len+offset,0,bf12_shaft_h+sfu16_nut_housing_h+plate_y_th])
+    translate([z_ballscrew_offset+z_ballscrew_nut_offset+sfu1605_fixed_end_len + sfu1605_fixed_end_bearings_len+sfu1605_nut_big_len+offset,0,bf12_shaft_h+sfu16_nut_housing_h+plate_y_th])
     sfu1605_nut_spacer(sk16_h+scj16uu_h-bf12_shaft_h-sfu16_nut_housing_h);
 
     /* Shaft with supports and bearings */
@@ -216,4 +216,4 @@ module plate_y_assembly(offset)
     }
 }
 
-plate_y_assembly(100);
+plate_y_assembly(70);

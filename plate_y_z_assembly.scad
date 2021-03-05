@@ -55,7 +55,7 @@ module plate_y_z_assembly(offset)
         /* Plate Z */
         plate_z()
         {
-            translate([-plate_y_l+z_shaft_len+z_ballscrew_offset+ sfu1605_fixed_end_len + sfu1605_fixed_end_bearings_len+sfu1605_nut_big_len,0,0])
+            translate([-plate_y_l+z_shaft_len+z_ballscrew_offset+ z_ballscrew_nut_offset+ sfu1605_fixed_end_len + sfu1605_fixed_end_bearings_len+sfu1605_nut_big_len,0,0])
             sfu1605_nut_plate_holes(6,plate_z_th);
 
             translate([scj16uu_L/2+sk16_B,-plate_y_w/2+sk16_W/2,0])
