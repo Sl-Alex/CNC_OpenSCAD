@@ -146,8 +146,26 @@ module bk12()
         bk12_sealing_thread();
         bk12_lock_nut();
     }
+    if ($children > 0)
+    {
+        translate([bk12_C1/2,bk12_vert_hole_offset,bk12_vert_hole_z])
+        children(0);
+        translate([bk12_C1/2,-bk12_vert_hole_offset,bk12_vert_hole_z])
+        children(0);
+    }
+    if ($children > 1)
+    {
+        translate([-bk12_C1/2,bk12_vert_hole_offset,bk12_vert_hole_z])
+        children(1);
+        translate([-bk12_C1/2,-bk12_vert_hole_offset,bk12_vert_hole_z])
+        children(1);
+    }
     bom_item("bk12");
 }
 
-bk12();
+bk12()
+{
+    cube(1);
+    cube(1);
+}
 bk12_plate_holes(7,10);

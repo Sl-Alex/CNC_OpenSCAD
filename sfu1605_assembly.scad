@@ -57,21 +57,17 @@ module sfu1605_assembly(length, nut_offset)
     union()
     {
         /* Fixed end */
-        bk12();
-        /* 4 screws */
-        if ($children > 1)
+        bk12()
         {
-            translate([-bk12_th/2+bk12_C1+bk12_C2,bk12_vert_hole_offset,bk12_vert_hole_z])
-            children(1);
-            translate([-bk12_th/2+bk12_C1+bk12_C2,-bk12_vert_hole_offset,bk12_vert_hole_z])
-            children(1);
-        }
-        if ($children > 2)
-        {
-            translate([-bk12_th/2+bk12_C2,bk12_vert_hole_offset,bk12_vert_hole_z])
-            children(2);
-            translate([-bk12_th/2+bk12_C2,-bk12_vert_hole_offset,bk12_vert_hole_z])
-            children(2);
+            /* 4 screws */
+            if ($children > 1)
+            {
+                children(1);
+            }
+            if ($children > 2)
+            {
+                children(2);
+            }
         }
     }
 

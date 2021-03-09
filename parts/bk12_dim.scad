@@ -1,7 +1,6 @@
 bk12_shaft_h = 25;
 bk12_th = 25;
 bk12_th_ext = 5;
-bk12_vert_hole_z = 31; // H1 - Z
 bk12_vert_hole_offset = 23;
 
 bk12_bearing_D = 26;
@@ -29,6 +28,8 @@ bk12_h  = bk12_shaft_h;
 bk12_H1 = 32.5;
 bk12_d2 = 5.5;
 bk12_X  = 6.6;
+
+bk12_vert_hole_z = bk12_H1 - bk12_Z;
 
 bk12_sealing_D  = 26;
 bk12_sealing_d1 = 16;
