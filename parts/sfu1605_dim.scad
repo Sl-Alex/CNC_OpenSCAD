@@ -6,5 +6,5 @@ sfu1605_floating_end_dia = 10;
 
 /* Lengths starting from the fixed end */
 sfu1605_fixed_end_len = 15;
-sfu1605_fixed_end_bearings_len = 36;
+sfu1605_fixed_end_bearings_len = 39;
 sfu1605_floating_end_len = 11;
