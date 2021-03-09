@@ -43,14 +43,13 @@ module sfu1605_assembly(length, nut_offset)
     union()
     {
         /* Floating end */
-        bf12();
-        /* 2 screws */
-        if ($children > 0)
+        bf12()
         {
-            translate([0,bf12_vert_hole_offset,bk12_vert_hole_z])
-            children(0);
-            translate([0,-bf12_vert_hole_offset,bk12_vert_hole_z])
-            children(0);
+            /* 2 screws */
+            if ($children > 0)
+            {
+                children(0);
+            }
         }
     }
 

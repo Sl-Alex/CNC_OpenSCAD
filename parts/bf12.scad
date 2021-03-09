@@ -75,8 +75,18 @@ module bf12()
         translate([(bf12_L-bf12_bearing_th)/2,0,bf12_h])
         bearing_6000();
     }
+    if ($children > 0)
+    {
+        translate([0,bf12_vert_hole_offset,bf12_vert_hole_z])
+        children(0);
+        translate([0,-bf12_vert_hole_offset,bf12_vert_hole_z])
+        children(0);
+    }
     bom_item("bf12");
 }
 
-bf12();
+bf12()
+{
+    cube(1);
+}
 bf12_plate_holes(7,10);
