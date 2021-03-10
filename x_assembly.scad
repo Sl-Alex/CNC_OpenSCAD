@@ -53,10 +53,15 @@ use     <parts/mx_nut.scad>
 include <CNC_dim.scad>
 
 /* Internal variables */
-profile_long_len   = sfu1605_assembly_get_screw_offset_fixed_x3(x_ballscrew_len)+profile_h/2;
+sfu1605_offset = profile_h*3/2-sfu1605_assembly_get_screw_offset_fixed_x2();
+
+profile_long_len   = sfu1605_offset + sfu1605_assembly_get_screw_offset_fixed_x3(x_ballscrew_len)+profile_h/2;
+
 profile_short_len = y_assembly_y_distance-profile_h*6;
 
-sbr16uu_plate_dist = 10;
+/* Internal constants */
+sbr16uu_plate_dist = 10; /* Distance between sbr16uu and X plate */
+offset_add = 20; /* Additional offset for sfu1605 nut */
 
 /* Motor with spider coupling and holder */
 module x_motor_complete()
@@ -66,7 +71,7 @@ module x_motor_complete()
         motor_x();
         motor();
         translate([motor_shaft_l,0,0])
-        shaft_coupling_spider(8,10,15, $fn = 50);
+        shaft_coupling_spider(8,10,12, $fn = 50);
     }
 }
 
@@ -76,7 +81,7 @@ module x_alu_base()
     translate([0,-(2*profile_h + y_assembly_y_distance)/2])
     {
         /* 2 short profiles */
-        translate([sfu1605_assembly_get_screw_offset_fixed_x3(x_ballscrew_len)+profile_h/2,profile_h*4,0])
+        translate([profile_long_len,profile_h*4,0])
             rotate([0,0,90])
                 profile_30x60(profile_short_len);
         translate([profile_h*2,profile_h*2*2,0])
@@ -161,12 +166,12 @@ module x_assembly(offset)
     /* Motor with spider coupling and holder */
     x_motor_complete();
 
-    translate([sfu1605_assembly_get_screw_offset_fixed_x2()-profile_h*3/2+offset + sfu1605_fixed_end_len + sfu1605_fixed_end_bearings_len+sfu1605_nut_big_len,0,profile_h+bf12_shaft_h+sfu16_nut_housing_h])
+    translate([sfu1605_offset+offset + offset_add + sfu1605_fixed_end_len + sfu1605_fixed_end_bearings_len+sfu1605_nut_big_len,0,profile_h+bf12_shaft_h+sfu16_nut_housing_h])
     sfu1605_nut_spacer(bk12_h+sbr16uu_h + sbr16uu_plate_dist - (bf12_shaft_h+sfu16_nut_housing_h));
 
     /* Ballscrew with supports */
-    translate([sfu1605_assembly_get_screw_offset_fixed_x2()-profile_h*3/2,0,profile_h])
-    sfu1605_assembly(x_ballscrew_len,offset)
+    translate([sfu1605_offset,0,profile_h])
+    sfu1605_assembly(x_ballscrew_len,offset+offset_add)
     {
         mx_dia = 6;
         mx_assembly(0,bk12_vert_hole_z+profile_th)
@@ -210,7 +215,7 @@ module x_assembly(offset)
             translate([x_sbr16uu_distance/2+sbr16uu_L-profile_long_len/2,0,bk12_h+sbr16uu_h + sbr16uu_plate_dist])
             plate_x(profile_long_len,profile_short_len+profile_h*6-10)
             {
-                translate([-x_sbr16uu_distance/2-sbr16uu_L+x_sbr16_len/2+sfu1605_assembly_get_screw_offset_fixed_x2()-profile_h*3/2+sfu1605_fixed_end_len + sfu1605_fixed_end_bearings_len+sfu1605_nut_big_len,0,0])
+                translate([-x_sbr16uu_distance/2-sbr16uu_L+x_sbr16_len/2+sfu1605_offset + offset_add +sfu1605_fixed_end_len + sfu1605_fixed_end_bearings_len+sfu1605_nut_big_len,0,0])
                 sfu1605_nut_plate_holes(6,plate_x_th);
 
                 translate([sbr16uu_L/2-x_sbr16uu_distance/2-sbr16uu_L+profile_long_len/2,profile_short_len/2+profile_h*2,0])
@@ -227,4 +232,4 @@ module x_assembly(offset)
     
 }
 
-x_assembly(180, $fn=30);
+x_assembly(250, $fn=30);
