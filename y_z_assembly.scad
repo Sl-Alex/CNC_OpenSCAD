@@ -26,7 +26,7 @@ use     <parts/motor_y.scad>
 include <parts/motor_y_dim.scad>
 /* Plate Y and Z assembly */
 use     <plate_y_z_assembly.scad>
-include <parts/plate_y_dim.scad>
+include <parts/plate_xyz_dim.scad>
 /* Spider coupling */
 use     <parts/shaft_coupling_spider.scad>
 include <parts/shaft_coupling_spider_dim.scad>

@@ -21,8 +21,8 @@ include <parts/sbr16_dim.scad>
 use     <parts/sbr16uu.scad>
 include <parts/sbr16uu_dim.scad>
 /* X plate */
-use     <parts/plate_x.scad>
-include <parts/plate_x_dim.scad>
+use     <parts/plate_xyz.scad>
+include <parts/plate_xyz_dim.scad>
 /* MX assembly */
 use     <mx_assembly.scad>
 /* MX screw */
@@ -213,7 +213,7 @@ module x_assembly(offset)
 
             /* X plate */
             translate([x_sbr16uu_distance/2+sbr16uu_L-profile_long_len/2,0,bk12_h+sbr16uu_h + sbr16uu_plate_dist])
-            plate_x(profile_long_len,profile_short_len+profile_h*6-10)
+            plate_x(profile_long_len,y_sbr16_len,plate_x_th)
             {
                 translate([-x_sbr16uu_distance/2-sbr16uu_L+x_sbr16_len/2+sfu1605_offset + offset_add +sfu1605_fixed_end_len + sfu1605_fixed_end_bearings_len+sfu1605_nut_big_len,0,0])
                 sfu1605_nut_plate_holes(6,plate_x_th);

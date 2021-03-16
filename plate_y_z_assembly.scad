@@ -1,9 +1,8 @@
 /* Complete Y plate assembly */
 use     <plate_y_assembly.scad>
-include <parts/plate_y_dim.scad>
 /* Z plate */
-use     <parts/plate_z.scad>
-include <parts/plate_z_dim.scad>
+use     <parts/plate_xyz.scad>
+include <parts/plate_xyz_dim.scad>
 /* scj16uu holes */
 use <parts/scj16uu.scad>
 include <parts/scj16uu_dim.scad>
@@ -53,7 +52,7 @@ module plate_y_z_assembly(offset)
     plate_y_assembly(offset)
     {
         /* Plate Z */
-        plate_z()
+        plate_z(plate_z_l,plate_z_w,plate_z_th)
         {
             translate([-plate_y_l+z_shaft_len+z_ballscrew_offset+ z_ballscrew_nut_offset+ sfu1605_fixed_end_len + sfu1605_fixed_end_bearings_len+sfu1605_nut_big_len,0,0])
             sfu1605_nut_plate_holes(6,plate_z_th);

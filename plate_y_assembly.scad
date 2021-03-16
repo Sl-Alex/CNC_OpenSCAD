@@ -5,8 +5,8 @@ include <parts/motor_dim.scad>
 use     <parts/motor_z.scad>
 include <parts/motor_z_dim.scad>
 /* Y plate */
-use     <parts/plate_y.scad>
-include <parts/plate_y_dim.scad>
+use     <parts/plate_xyz.scad>
+include <parts/plate_xyz_dim.scad>
 /* Ball screw assembly */
 use     <sfu1605_assembly.scad>
 include <parts/bk12_dim.scad>
@@ -28,8 +28,6 @@ use     <parts/mx_washer.scad>
 include <parts/mx_washer_dim.scad>
 /* MX nut */
 use     <parts/mx_nut.scad>
-
-include <parts/plate_z_dim.scad>
 
 /* Shaft support */
 use <parts/sk16.scad>
@@ -106,7 +104,7 @@ module z_scj16uu_single_assembly()
 module plate_y_assembly(offset)
 {
     /* Base plate */
-    plate_y()
+    plate_y(plate_y_l, plate_y_w, plate_y_th)
     {
         translate([-motor_z_th,0,bk12_h+plate_y_th])
         motor_z_plate_holes(5.5,plate_y_th);

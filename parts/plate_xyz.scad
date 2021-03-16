@@ -1,14 +1,13 @@
 include <colors.scad>
 include <bom.scad>
-include <plate_x_dim.scad>
 
-module plate_x(plate_x_l,plate_x_w)
+module plate_base(l,w,th)
 {
     difference()
     {
-        translate([0,-plate_x_w/2,0])
+        translate([0,-w/2,0])
         color(color_alu)
-        cube([plate_x_l,plate_x_w,plate_x_th]);
+        cube([l,w,th]);
 
         if ($children > 0)
         {
@@ -21,10 +20,27 @@ module plate_x(plate_x_l,plate_x_w)
     }
     
 
-	bom_item(str("plate_x_",plate_x_l,"x",plate_x_w,"x",plate_x_th));
 }
 
-plate_x(200,100, $fn=30)
+module plate_x(l,w,th)
+{
+    plate_base(l,w,th);
+    bom_item(str("plate_x_",l,"x",w,"x",th));
+}
+
+module plate_y(l,w,th)
+{
+    plate_base(l,w,th);
+    bom_item(str("plate_y_",l,"x",w,"x",th));
+}
+
+module plate_z(l,w,th)
+{
+    plate_base(l,w,th);
+    bom_item(str("plate_z_",l,"x",w,"x",th));
+}
+
+plate_x(200,100,10,$fn=30)
 {
     translate([10,10,-1])
     cylinder(h=plate_x_th+2, r = 3, center = false);
