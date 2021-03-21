@@ -6,7 +6,7 @@ use <y_z_assembly.scad>
 include <parts/profile_30_dim.scad>
 
 offset_x = 300;
-offset_y = 300;
+offset_y = 50;
 offset_z = 70;
 
 offset_y_mount = 200;
