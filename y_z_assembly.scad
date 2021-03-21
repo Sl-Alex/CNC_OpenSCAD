@@ -61,8 +61,8 @@ y_profile_bottom_h = profile_h + sbr16_h + sbr16uu_h;
 y_shaft_offset = (y_profile_bottom_offset + y_profile_bottom_h + y_profile_top_offset)/2;
 shaft_ext_offset = shaft_coupling_spider_l_o + shaft_coupling_margin;
 ball_screw_offset = y_assembly_y_distance/2+profile_h+shaft_ext_offset-shaft_ext_len - shaft_ext_distance_screw;
-profile_fixed_end_support_dist = ball_screw_offset - profile_h/2- sfu1605_fixed_end_bearings_len - sfu1605_fixed_end_len + bk12_C2;
-profile_floating_end_support_dist = ball_screw_offset - y_ball_screw_len- profile_h/2+sfu1605_floating_end_len-bf12_bearing_th/2;
+profile_fixed_end_support_dist = -ball_screw_offset + profile_h/2+ sfu1605_fixed_end_bearings_len + sfu1605_fixed_end_len - bk12_C2;
+profile_floating_end_support_dist = -ball_screw_offset + y_ball_screw_len + profile_h/2 -sfu1605_floating_end_len + bf12_bearing_th/2;
 sbr16uu_offset_def = y_sbr16_len/2;
 
 /* Both linear rails */
@@ -109,7 +109,7 @@ module y_sbr16uu_assembly()
     rotate([0,0,90])
     translate([0,0,profile_h+sbr16_h])
     {
-        translate([-sbr16uu_L/2,0,0])
+        translate([sbr16uu_L/2,0,0])
         sbr16uu()
         {
             group(){};
@@ -117,7 +117,7 @@ module y_sbr16uu_assembly()
             group(){};
             group(){};
         }
-        translate([-plate_y_w+sbr16uu_L/2,0,0])
+        translate([plate_y_w-sbr16uu_L/2,0,0])
         sbr16uu()
         {
             group(){};
@@ -151,6 +151,22 @@ module y_profile_bracket_small_x2(dist)
     translate([-dist/2,profile_h/2,0])
     rotate([0,-90,0])
     bracket_small_assembly(1,0);
+}
+
+module y_bk_bf_support()
+{
+    rotate([0,-90,0])
+    {
+        profile_30x30(y_profile_top_offset - y_profile_bottom_offset+profile_h);
+
+        translate([profile_h,profile_h/2,0])
+        rotate([0,0,90])
+        y_profile_bracket_small_x2(profile_h);
+
+        translate([y_profile_top_offset - y_profile_bottom_offset + profile_h,profile_h/2,0])
+        rotate([0,0,90])
+        y_profile_bracket_small_x2(profile_h);
+    }
 }
 
 /* Complete Y and Z assembly */
@@ -193,37 +209,16 @@ module y_z_assembly(offset_y, offset_z)
     y_linear_rail();
 
     /* Ball screw floating end support profile */
-    translate([-profile_h,profile_floating_end_support_dist,y_profile_bottom_offset])
-    rotate([0,-90,0])
-    {
-        profile_30x30(y_profile_top_offset - y_profile_bottom_offset+profile_h);
-
-        translate([profile_h,profile_h/2,0])
-        rotate([0,0,90])
-        y_profile_bracket_small_x2(profile_h);
-
-        translate([y_profile_top_offset - y_profile_bottom_offset + profile_h,profile_h/2,0])
-        rotate([0,0,90])
-        y_profile_bracket_small_x2(profile_h);
-    }
+    translate([-profile_h,profile_floating_end_support_dist-profile_h,y_profile_bottom_offset])
+    y_bk_bf_support();
+    
     /* Ball screw fixed end support profile */
-    translate([-profile_h,profile_fixed_end_support_dist,y_profile_bottom_offset])
-    rotate([0,-90,0])
-    {
-        profile_30x30(y_profile_top_offset - y_profile_bottom_offset+profile_h);
-
-        translate([profile_h,profile_h/2,0])
-        rotate([0,0,90])
-        y_profile_bracket_small_x2(profile_h);
-
-        translate([y_profile_top_offset - y_profile_bottom_offset + profile_h,profile_h/2,0])
-        rotate([0,0,90])
-        y_profile_bracket_small_x2(profile_h);
-    }
+    translate([-profile_h,profile_fixed_end_support_dist-profile_h,y_profile_bottom_offset])
+    y_bk_bf_support();
 
     /* Ball screw assembly */
-    translate([-profile_h+y_bk12_bf12_support_th,ball_screw_offset,y_shaft_offset])
-    rotate([-90,0,0])
+    translate([-profile_h+y_bk12_bf12_support_th,-ball_screw_offset,y_shaft_offset])
+    rotate([90,0,0])
     rotate([0,90,0])
     sfu1605_assembly(y_ball_screw_len,offset_y)
     {
@@ -243,12 +238,12 @@ module y_z_assembly(offset_y, offset_z)
     }
 
     /* Y plate with Z assembly */
-    translate([profile_h,sbr16uu_offset_def-plate_y_w/2-offset_y,y_profile_top_offset + 100])
+    translate([profile_h,-sbr16uu_offset_def+plate_y_w/2+offset_y,y_profile_top_offset + 140])
     rotate([0,90,0])
     plate_y_z_assembly(offset_z);
 
     /* Linear bearings */
-    translate([0,sbr16uu_offset_def-offset_y,0])
+    translate([0,-sbr16uu_offset_def+offset_y,0])
     {
         translate([0,0,y_profile_bottom_offset])
         y_sbr16uu_assembly();
@@ -257,7 +252,7 @@ module y_z_assembly(offset_y, offset_z)
     }
 
     /* BK/BF support spacers */
-    translate([-profile_h,profile_h/2,y_shaft_offset])
+    translate([-profile_h,-profile_h/2,y_shaft_offset])
     {
         rotate([0,90,0])
         {
@@ -268,9 +263,9 @@ module y_z_assembly(offset_y, offset_z)
         }
     }
     /* Motor with spider and fixed couplings, shaft extension and holder */
-    translate([0,y_assembly_y_distance/2+profile_h,y_shaft_offset])
-    rotate([0,0,-90])
+    translate([0,-y_assembly_y_distance/2-profile_h,y_shaft_offset])
+    rotate([0,0,90])
     y_motor_complete();
 }
 
-y_z_assembly(100,70);
+y_z_assembly(310,00);
